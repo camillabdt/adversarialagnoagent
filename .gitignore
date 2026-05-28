@@ -9,3 +9,10 @@ env/
 pycache/
 init__.pyc
 __pycache__/
+*.pyc
+outputs/
+logs/
+generator_runtime/target/training/
+generator_runtime/target/tracking/
+generator_runtime/*.jar
+generator_runtime/target/benign_data/*

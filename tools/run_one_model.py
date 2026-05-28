@@ -46,7 +46,7 @@ def clean_run_outputs() -> None:
 
 def restore_baseline_json() -> None:
     source = BASE_DIR / "inputs" / "uc03_masquerade_fault.json"
-    target = BASE_DIR / "ERENO-2.0" / "config" / "attacks" / "uc03_masquerade_fault.json"
+    target = BASE_DIR / "generator_runtime" / "config" / "attacks" / "uc03_masquerade_fault.json"
 
     shutil.copy(source, target)
 

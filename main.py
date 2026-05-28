@@ -7,10 +7,10 @@ from agents.strategist_agent import StrategistAgent
 from configs.settings import (
     ATTACK_CONFIGS_DIR,
     ATTACK_JSON_PATH,
-    ERENO_ATTACK_CONFIG_RELATIVE_PATH,
-    ERENO_OUTPUT_DATASET_PATH,
-    ERENO_PROJECT_PATH,
-    ERENO_RUN_COMMAND,
+    GENERATOR_ATTACK_CONFIG_RELATIVE_PATH,
+    GENERATOR_OUTPUT_DATASET_PATH,
+    GENERATOR_RUNTIME_DIR,
+    GENERATOR_RUN_COMMAND,
     ITERATION_HISTORY_PATH,
     LLM_RESPONSE_PATH,
     LLM_RESPONSES_DIR,
@@ -24,7 +24,7 @@ from configs.settings import (
     TOTAL_ITERATIONS,
 )
 from tools.attack_config_validator import validate_and_clamp_attack_config
-from tools.ereno_runner import ErenoRunner
+from tools.generator_runner import GeneratorRunner
 from tools.experiment_memory import ExperimentMemory
 from tools.ids_evaluator import IdsEvaluator
 from tools.json_loader import load_json, load_text, save_json, save_text
@@ -109,11 +109,11 @@ def main() -> None:
         temperature=TEMPERATURE,
     )
 
-    ereno = ErenoRunner(
-        ereno_project_path=ERENO_PROJECT_PATH,
-        attack_config_relative_path=ERENO_ATTACK_CONFIG_RELATIVE_PATH,
-        output_dataset_path=ERENO_OUTPUT_DATASET_PATH,
-        run_command=ERENO_RUN_COMMAND,
+    generator = GeneratorRunner(
+        runtime_dir=GENERATOR_RUNTIME_DIR,
+        attack_config_relative_path=GENERATOR_ATTACK_CONFIG_RELATIVE_PATH,
+        output_dataset_path=GENERATOR_OUTPUT_DATASET_PATH,
+        run_command=GENERATOR_RUN_COMMAND,
         suggested_config_path=str(SUGGESTED_CONFIG_PATH),
     )
 
@@ -127,7 +127,7 @@ def main() -> None:
     print("BASELINE TRAINING")
     print("==============================")
 
-    baseline_dataset_path = ereno.generate_dataset(
+    baseline_dataset_path = generator.generate_dataset(
         attack_config=baseline_attack_json,
         iteration=0,
     )
@@ -247,7 +247,7 @@ def main() -> None:
 
             continue
 
-        dataset_path = ereno.generate_dataset(
+        dataset_path = generator.generate_dataset(
             attack_config=attack_json,
             iteration=iteration,
         )
